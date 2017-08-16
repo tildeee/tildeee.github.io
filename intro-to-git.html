@@ -19,6 +19,11 @@ body, tw-story {
 
 .tw-expression::before {
   content: "→";
+}
+
+.code {
+  background: gray;
+  line-height: 2em;
 }</style><script role="script" id="twine-user-script" type="text/twine-javascript"></script><tw-passagedata pid="1" name="Welcome to git!" tags="" position="60,30">(print: (passage:)&#x27;s name)
 
 → [[I am starting a new git repo-&gt;Starting a fresh Git repo]] (new codebase, no existing code, doesn&#x27;t exist anywhere) 
@@ -28,12 +33,14 @@ body, tw-story {
 
 [[I need to make more local changes-&gt;I have some local changes]]
 [[I want a nice view to show all of my local, uncommitted changes-&gt;git diff]]
-[[I feel generally confident in my changes, and I want to STAGE my changes-&gt;git add]]</tw-passagedata><tw-passagedata pid="3" name="What branch do you need to be on?" tags="" position="367,45">What branch do you need to be on?
-Check the list of branches available: git branch
-The asterisk marks which branch you are on
+[[I feel generally confident in my changes, and I want to STAGE my changes-&gt;git add]]</tw-passagedata><tw-passagedata pid="3" name="What branch do you need to be on?" tags="" position="367,45">Check the list of branches available:
+&lt;p class=&quot;code&gt;$ git branch&lt;/p&gt;
+The asterisk(*) marks which branch you are on
+
+What branch do you need to be on?
 
 [[I don&#x27;t know-&gt;What branch should I be on?]]
-[[Master is fine or I&#x27;m already on the branch I should be working on-&gt;I&#x27;m ready to make some local code changes]]
+[[I&#x27;m on the branch I should be working on-&gt;I&#x27;m ready to make some local code changes]]
 [[I need to make a new feature branch or switch to an existing feature branch-&gt;Feature branch]]</tw-passagedata><tw-passagedata pid="4" name="What branch should I be on?" tags="" position="573,30">(print: (passage:)&#x27;s name)
 
 [[I&#x27;m ready to make some local code changes]]</tw-passagedata><tw-passagedata pid="5" name="Feature branch" tags="" position="438,286">(print: (passage:)&#x27;s name)
@@ -46,8 +53,19 @@ I know I&#x27;m on the correct branch, [[so I&#x27;m going to make local changes
 
 I have some local code changes on my computer, and my computer alone.
 
+I want to see a view that summarizes what changes I&#x27;ve made:
+
+&lt;code&gt;$ git diff&lt;/code&gt;
+
+
 [[I need to make more local changes-&gt;I have some local changes]]
 [[I feel generally confident in my changes, and I want to STAGE my changes-&gt;git add]]</tw-passagedata><tw-passagedata pid="8" name="git add" tags="" position="917,167">(print: (passage:)&#x27;s name)
+
+&lt;p class=&quot;code&quot;&gt;$ git add filename.txt&lt;/p&gt;
+
+or
+&lt;p class=&quot;code&quot;&gt;$ git add -p&lt;/p&gt;
+to interactively add chunks of code, approving them chunk by chunk using y/n/etc...
 
 Now that I&#x27;ve staged some files, I can either change more files, or move on to make a commit.
 
@@ -61,12 +79,23 @@ The code in staging (the code that is staged) is ready to be in a unit of change
 → My staged code is messed up, what do I do now?
 → I have an existing commit that I need to make changes to
 
-No, I&#x27;m ready to commit.
+No, I&#x27;m ready to commit. This will take all of the changes that are staged and group them in a commit.
 
+&lt;p class=&quot;code&quot;&gt;$ git commit -m &quot;My commit message here&quot;&lt;/p&gt;
+The -m option is to show that the next argument will be the commit message.
+&quot;My commit message here&quot;, or the commit message, should be a meaningful string that describes concisely a summary of your changes.
+
+Now, when I type &lt;p class=&quot;code&quot;&gt;$ git status&lt;/p&gt;, I see that all of my staging environment is clear.
+
+No, when I type &lt;p class=&quot;code&quot;&gt;$ git log&lt;/p&gt;, I see that my new commit is at the top of the log.
 
 → [[Am I ready to push?-&gt;Testing]]</tw-passagedata><tw-passagedata pid="10" name="Starting a fresh Git repo" tags="" position="0,161">(print: (passage:)&#x27;s name)
 
+&lt;p class=&quot;code&quot;&gt;$ git init&lt;/p&gt;
+
 [[I&#x27;m ready to make some local code changes]]</tw-passagedata><tw-passagedata pid="11" name="Cloning an existing repo from Github" tags="" position="130,161">(print: (passage:)&#x27;s name)
+
+&lt;p class=&quot;code&quot;&gt;$ git clone https://github.com/org-or-user/repo.git&lt;/p&gt;
 
 [[I&#x27;m ready to make some local code changes]]</tw-passagedata><tw-passagedata pid="12" name="Making a repo on Github" tags="" position="257,155">(print: (passage:)&#x27;s name)
 
@@ -76,7 +105,17 @@ No, I&#x27;m ready to commit.
 → Yes, and I don&#x27;t know how to run the tests
 → [[No, I don&#x27;t have tests-&gt;Pulling]]</tw-passagedata><tw-passagedata pid="14" name="Pulling" tags="" position="903,335">Time to pull down new code updates.
 
-[[I&#x27;ve already pulled code and tested. It&#x27;s time to push.-&gt;Pushing]]</tw-passagedata><tw-passagedata pid="15" name="Pushing" tags="" position="843,440">Double-click this passage to edit it.</tw-passagedata></tw-storydata>
+&lt;p class=&quot;code&quot;&gt;$ git pull --rebase&lt;/p&gt;
+
+This command pulls down code changes that have been pushed up to the repo.
+It assumes that git will pull down from the remote signified by the marked(*) branch displayed by $ git branch --track
+It performs the following commands in order:
+$ git fetch
+$ git rebase
+
+[[I&#x27;ve pulled down code and tested. It&#x27;s time to push.-&gt;Pushing]]</tw-passagedata><tw-passagedata pid="15" name="Pushing" tags="" position="1028,404">I&#x27;d like to review [[git log]]
+
+My project utilizes CI (Continuous Integration). I need to [[check the build]]</tw-passagedata><tw-passagedata pid="16" name="check the build" tags="" position="812,506">Double-click this passage to edit it.</tw-passagedata><tw-passagedata pid="17" name="git log" tags="" position="1039,250">Double-click this passage to edit it.</tw-passagedata></tw-storydata>
 
 <script title="Twine engine code" data-main="harlowe">"use strict";function _defineProperty(e,t,n){return t in e?Object.defineProperty(e,t,{value:n,enumerable:!0,configurable:!0,writable:!0}):e[t]=n,e}function _toConsumableArray(e){if(Array.isArray(e)){for(var t=0,n=Array(e.length);t<e.length;t++)n[t]=e[t];return n}return Array.from(e)}var _slicedToArray=function(){function e(e,t){var n=[],r=!0,i=!1,o=void 0;try{for(var a,s=e[Symbol.iterator]();!(r=(a=s.next()).done)&&(n.push(a.value),!t||n.length!==t);r=!0);}catch(e){i=!0,o=e}finally{try{!r&&s.return&&s.return()}finally{if(i)throw o}}return n}return function(t,n){if(Array.isArray(t))return t;if(Symbol.iterator in Object(t))return e(t,n);throw new TypeError("Invalid attempt to destructure non-iterable instance")}}(),_typeof="function"==typeof Symbol&&"symbol"==typeof Symbol.iterator?function(e){return typeof e}:function(e){return e&&"function"==typeof Symbol&&e.constructor===Symbol&&e!==Symbol.prototype?"symbol":typeof e};!function(){/**
  * @license almond 0.3.3 Copyright jQuery Foundation and other contributors.
